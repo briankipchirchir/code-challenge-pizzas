@@ -45,8 +45,8 @@ def delete_restaurant(id):
     if not restaurant:
         return jsonify({"error": "Restaurant not found"}), 404
 
-    # Assuming cascade delete is not set up, manually delete related restaurant_pizzas
-    RestaurantPizza.query.filter_by(restaurant_id=id).delete()
+    
+
 
     db.session.delete(restaurant)
     db.session.commit()
@@ -66,7 +66,7 @@ def create_restaurant_pizza():
     if data['price'] < 1 or data['price'] > 30:
         return jsonify({"errors": ["validation errors"]}), 400
 
-    # Check if restaurant and pizza exist
+
     restaurant = db.session.get(Restaurant, data['restaurant_id'])
     pizza = db.session.get(Pizza, data['pizza_id'])
     if not restaurant or not pizza:
@@ -77,7 +77,7 @@ def create_restaurant_pizza():
     db.session.add(restaurant_pizza)
     db.session.commit()
 
-    # Build response data
+    
     response_data = restaurant_pizza.to_dict()
     return jsonify(response_data), 201
 
